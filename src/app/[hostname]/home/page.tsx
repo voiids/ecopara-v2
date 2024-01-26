@@ -1,3 +1,4 @@
+import Div from "@/components/Div";
 import { headers } from "next/headers";
 import React from "react";
 
@@ -7,7 +8,9 @@ export const fetchGet = async (host: string) => {
         domainName: host,
     };
     try {
-        const response: any = await fetch(`https://${host}/api/parameters/visual-params?from=next&domainName=${host}`);
+        const response: any = await fetch(
+            `https://api.ecopara.ovh/api/parameters/visual-params?from=next&domainName=${host}`
+        );
         if (!response.ok) {
             const message = `An error has occured: ${response.status}`;
             throw new Error(message);
@@ -27,7 +30,11 @@ const Home = async () => {
     const staticData = await fetchGet(host!);
     console.log("staticData", staticData);
 
-    return <div>page</div>;
+    return (
+        <div>
+            <Div bgColor={staticData?.mainBackgroundColor ?? ""} />
+        </div>
+    );
 };
 
 export default Home;
